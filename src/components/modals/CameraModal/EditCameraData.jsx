@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDashboardStore } from "../../../store/appStore";
 import { useEditCamera } from "../../../services/camera/camera.hooks";
+import { toast, ToastContainer } from "react-toastify";
 
 // Correct IP validation regex
 const ipRegex =
@@ -11,7 +12,11 @@ const ipRegex =
 
 const cameraSchema = z.object({
   name: z.string().min(2, "Place name is required!"),
-  username: z.string().min(2, "Username is required!"),
+  username: z
+    .string()
+    .min(2, "Username is required!")
+    .optional()
+    .or(z.literal("")),
   password: z
     .string()
     .min(6, "Password must be at least 6 characters!")
@@ -50,11 +55,13 @@ const EditCameraData = ({ onClose }) => {
       const response = await editCamera({ data, cameraId });
       if (response) {
         setMessage("Camera updated successfully!");
+        toast.success("Camera updated successfully!");
         console.log("Camera updated successfully!");
         setTimeout(() => onClose(), 3000);
       }
     } catch (error) {
       console.error(error);
+      toast.error(error || "Error while updating camera. Please try again!");
       setMessage("Error while updating camera. Please try again!");
     }
   };
@@ -180,6 +187,7 @@ const EditCameraData = ({ onClose }) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
