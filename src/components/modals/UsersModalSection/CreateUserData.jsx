@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateUsers } from "../../../services/Users/users.hooks";
+import { toast, ToastContainer } from "react-toastify";
 
 const userSchema = z.object({
   name: z.string().min(3, "Please enter more that 3 characters!"),
@@ -12,7 +13,7 @@ const userSchema = z.object({
 });
 const CreateUserData = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate: create_user, isPending } = useCreateUsers();
+  const { mutateAsync: create_user, isPending } = useCreateUsers();
   const [message, setMessage] = useState("");
 
   const {
@@ -24,22 +25,12 @@ const CreateUserData = ({ onClose }) => {
   });
 
   const createUser = async (data) => {
-    // create_user(data, {
-    //   onSuccess: () => {
-    //     setMessage("User created successfully!");
-    //     console.log("User created Successfully!");
-    //   },
-    //   onError: (error) => {
-    //     setMessage(error?.message);
-    //     console.error(error || "Failed to create user! Please try again.");
-    //   },
-    // });
     try {
       const response = await create_user(data);
       if (response) {
         setMessage("User created successfully!");
+        toast.success("User created successfully!");
         onClose();
-        console.log("User created Successfully!");
       }
     } catch (error) {
       if (error?.response) {
@@ -51,6 +42,7 @@ const CreateUserData = ({ onClose }) => {
         "Failed to create user! Please try again.",
         error?.response?.data?.detail
       );
+      toast.error(error || "Failed to create user! Please try again.");
     }
   };
   return (
@@ -150,6 +142,7 @@ const CreateUserData = ({ onClose }) => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

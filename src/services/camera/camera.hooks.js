@@ -13,12 +13,12 @@ export const useGetCameraList = () => {
                 if (error.response) {
                     console.error('Failed to get camera listing: ', error.response)
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
         retryDelay: 20000,
-       
+
     })
 }
 
@@ -34,12 +34,12 @@ export const useGetCameraById = () => {
                 if (error.response) {
                     console.error('Failed to get camera details: ', error.response)
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
         retryDelay: 20000,
-    
+
     })
 }
 
@@ -56,7 +56,7 @@ export const useEditCamera = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         onSuccess: () => {
@@ -77,7 +77,7 @@ export const useDeleteCamera = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         onSuccess: () => {
@@ -100,7 +100,7 @@ export const useGetCameraCount = () => {
                 if (error.response) {
                     console.error('Failed to get camera count: ', error.response)
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
@@ -120,7 +120,7 @@ export const useGetAlertsById = (id) => {
                 if (error.response) {
                     console.error('Failed to get alerts: ', error.response);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
@@ -140,7 +140,7 @@ export const useGetAllAlerts = () => {
                 if (error.response) {
                     console.error('Failed to get alerts: ', error.response)
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
@@ -159,7 +159,7 @@ export const useCreateZones = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         }
     })

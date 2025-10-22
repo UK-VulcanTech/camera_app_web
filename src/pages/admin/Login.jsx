@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useLogin } from "../../services/auth/auth.hooks";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -12,7 +13,7 @@ const loginSchema = z.object({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { mutateAsync: login, isPending } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -30,30 +31,23 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const { email, password } = data;
-    try {
-      login(
-        { email, password },
-        {
-          onSuccess: () => {
-            setMessage("User logged in successfully!");
-            setTimeout(() => {
-              navigate("/dashboard");
-            }, 1000);
-          },
-          onError: (error) => {
-            setMessage(error || "Failed to login. Please try again!")
-          }
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      if (error.status === 401) {
-        setMessage("Enter correct email or password!");
-      } else if (error.status === 500) {
-        setMessage("Please check your network connection!");
+
+    login(
+      { email, password },
+      {
+        onSuccess: () => {
+          setMessage("User logged in successfully!");
+          toast.success("User logged in successfully!");
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1000);
+        },
+        onError: (error) => {
+          setMessage(error || "Failed to login. Please try again!");
+          toast.error(error || "Failed to login! Please try again.");
+        },
       }
-      console.error("Failed to login! Please try again.", error);
-    }
+    );
   };
 
   return (
@@ -108,8 +102,9 @@ const Login = () => {
           </div>
           {message && (
             <p
-              className={` text-sm ${message.includes("success") ? "text-green-600" : "text-red-500"
-                } `}
+              className={` text-sm ${
+                message?.includes("success") ? "text-green-600" : "text-red-500"
+              } `}
             >
               {message}
             </p>
@@ -122,6 +117,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

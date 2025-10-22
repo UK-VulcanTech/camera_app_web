@@ -12,6 +12,7 @@ import { useDashboardStore } from "../../../store/appStore";
 import EditUser from "../../../components/modals/UsersModalSection/EditUser";
 import EditUserData from "../../../components/modals/UsersModalSection/EditUserData";
 import TopBar from "../../../layout/TopBar";
+import { toast, ToastContainer } from "react-toastify";
 
 const Users = () => {
   const { data: users, isPending: listLoading } = useGetUsers();
@@ -27,12 +28,14 @@ const Users = () => {
     try {
       const response = await deleteRecord(id);
       if (response) {
+        toast.success("User deleted successfully!");
         setTimeout(() => {
           setIsDeleteModal(false);
         }, 100);
       }
     } catch (error) {
       console.error("Error while deleting: ", error);
+      toast.error(error || "Failed to delete user!");
     }
   };
   return (
@@ -158,6 +161,7 @@ const Users = () => {
             </tbody>
           </table>
         </div>
+        <ToastContainer />
 
         {isOpen && (
           <CreateUser open={isOpen} onClose={() => setIsOpen(false)}>

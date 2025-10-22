@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEditUser } from "../../../services/Users/users.hooks";
 import { useDashboardStore } from "../../../store/appStore";
+import { toast } from "react-toastify";
 
 const userSchema = z.object({
   name: z.string().min(3, "Please enter more that 3 characters!"),
@@ -36,7 +37,7 @@ const EditUserData = ({ onClose }) => {
       const response = await editUser({ data, userId });
       if (response) {
         setMessage("User edited successfully!");
-        console.log("User edited successfully!");
+        toast.success("User details edited successfully!");
         setTimeout(() => {
           onClose();
         }, 3000);
@@ -51,6 +52,7 @@ const EditUserData = ({ onClose }) => {
         "Failed to edit user detail! Please try again.",
         error?.response?.data?.detail
       );
+      toast.error(error || "Failed to edit user detail! Please try again.");
     }
   };
   return (

@@ -11,6 +11,7 @@ import EditCameraData from "../../../components/modals/CameraModal/EditCameraDat
 import DeleteAlert from "../../../components/modals/DeleteAlertModal/DeleteAlert";
 import DeleteAlertData from "../../../components/modals/DeleteAlertModal/DeleteAlertData";
 import TopBar from "../../../layout/TopBar";
+import { toast, ToastContainer } from "react-toastify";
 
 const Camera = () => {
   const { data: cameraList, isPending: listLoading } = useGetCameraList();
@@ -26,7 +27,6 @@ const Camera = () => {
     navigate(`/alerts/${id}`);
   };
   const handleZoneClick = (cameraDetail) => {
-   
     setCameraDetails(cameraDetail);
     setTimeout(() => {
       navigate(`/cameraStream`);
@@ -37,11 +37,13 @@ const Camera = () => {
     try {
       const response = await deleteCamera(id);
       if (response) {
+        toast.success("Camera record deleted successfully!");
         setTimeout(() => {
           setIsDeleteModal(false);
         }, 100);
       }
     } catch (error) {
+      toast.error(error || "Failed to delete! Please try again.");
       console.error("Error while deleting: ", error);
     }
   };
@@ -153,7 +155,7 @@ const Camera = () => {
             </tbody>
           </table>
         </div>
-
+        <ToastContainer />
         {isEditModal && (
           <EditCamera open={isEditModal} onClose={() => setIsEditModal(false)}>
             <EditCameraData onClose={() => setIsEditModal(false)} />

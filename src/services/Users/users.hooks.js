@@ -13,7 +13,7 @@ export const useGetUsers = () => {
                 if (error.response) {
                     console.error('Failed to get users: ', error.response);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         retry: 1,
@@ -38,7 +38,7 @@ export const useCreateUsers = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         onSuccess: () => {
@@ -60,7 +60,7 @@ export const useDeleteUser = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         onSuccess: () => {
@@ -82,7 +82,7 @@ export const useEditUser = () => {
                     console.error('Response Status: ', error.response.status);
                     console.error('Response Data: ', error.response.data);
                 }
-                throw error;
+                throw error?.response?.data?.detail || error;
             }
         },
         onSuccess: () => {
