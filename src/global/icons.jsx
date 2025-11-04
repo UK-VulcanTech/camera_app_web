@@ -18,7 +18,7 @@ import { HiMiniUsers, HiMiniArrowRightOnRectangle } from "react-icons/hi2";
 import { RxCross2 } from "react-icons/rx";
 import { LuCamera } from "react-icons/lu";
 import { BiShield, BiSolidEditAlt } from "react-icons/bi";
-import { IoMdTime } from "react-icons/io";
+import { IoMdTime, IoMdAdd } from "react-icons/io";
 import { GoDotFill, GoTag } from "react-icons/go";
 import { TiDeleteOutline } from "react-icons/ti";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -41,6 +41,7 @@ const ioIcons = {
   IoMap: <IoMap />,
   IoMdTime: <IoMdTime />,
   IoSearchOutline: <IoSearchOutline />,
+  IoMdAdd: <IoMdAdd />,
 };
 
 const tbIcons = {

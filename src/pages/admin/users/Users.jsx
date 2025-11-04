@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { aiIcons, mdIcons } from "../../../global/icons";
+import { aiIcons, ioIcons, mdIcons } from "../../../global/icons";
 import {
   useDeleteUser,
   useGetUsers,
@@ -60,7 +60,7 @@ const Users = () => {
             onClick={() => setIsOpen(true)}
             className="px-[1rem] py-[0.5rem] rounded-lg cursor-pointer hover:bg-theme-blue bg-theme-darkBlue text-white"
           >
-            Create New User
+            <span className="flex items-center gap-1">{ioIcons.IoMdAdd} Create New User</span>
           </button>
         </div>
         {/* Users Table */}
