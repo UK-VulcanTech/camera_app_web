@@ -8,9 +8,9 @@ const CameraAlerts = () => {
   const { data: cameraAlerts } = useGetAlertsById(id);
 
   return (
-    <div className="px-12 pb-8">
+    <div className="px-2 md:px-12 pb-8">
       {/* Heading Section */}
-      <div className="my-4 md:mb-12">
+      <div className="max-md:px-12 my-4 md:mb-12">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Alerts</h1>
         <p className="mt-2 text-sm text-gray-500">Get realtime alerts.</p>
       </div>
@@ -27,7 +27,7 @@ const CameraAlerts = () => {
               </p>
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">{alert.message}</p>
-                <div className="flex items-center gap-4 text-sm text-neutral-500">
+                <div className="flex items-center gap-4 flex-wrap text-sm text-neutral-500">
                   <p className="flex items-center gap-2">
                     <span>{luIcons.LuCamera}</span>Camera: {alert.camera_id}
                   </p>

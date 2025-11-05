@@ -9,10 +9,12 @@ export const useDashboardStore = create(
             setUserDetails: (data) => set({ userDetails: data }),
             cameraDetails: [],
             setCameraDetails: (data) => set({ cameraDetails: data }),
+            searchItem: "",
+            setSearchItem: (item) => set({ searchItem: item }),
         }),
         {
             name: 'dashboard-storage', // Storage key
-            partialize: (state) => ({ cameraDetails: state.cameraDetails }),
+            partialize: (state) => ({ cameraDetails: state.cameraDetails }), //only this will persist
         }
     )
 );

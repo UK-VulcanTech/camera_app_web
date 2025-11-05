@@ -5,6 +5,7 @@ import {
   luIcons,
   tbIcons,
 } from "../../../global/icons";
+import TopBar from "../../../layout/TopBar";
 import {
   useGetAllAlerts,
   useGetCameraCount,
@@ -32,16 +33,16 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className="px-12 pb-8">
+    <div className="px-2 md:px-12 pb-8">
       {/* Heading Section */}
-      <div className="lg:mt-4 lg:mb-12">
+      <div className="max-md:px-12  mt-4 lg:mb-12">
         <h1 className="text-xl lg:text-3xl font-bold">Security Dashboard</h1>
         <p className="my-2 text-xs lg:text-sm text-neutral-500">
           Monitor your security system in real-time.
         </p>
       </div>
       {/* Summary Section - cards */}
-      <section className="flex flex-col sm:flex-row gap-4 ">
+      <section className="flex flex-col sm:flex-row gap-4">
         {cards.map((card) => (
           <div
             key={card.id}

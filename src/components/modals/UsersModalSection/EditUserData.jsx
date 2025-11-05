@@ -57,7 +57,7 @@ const EditUserData = ({ onClose }) => {
   };
   return (
     <div className="flex items-center justify-center">
-      <div className="fixed top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 xl:w-[32vw] lg:w-[42vw] md:w-[52vw] w-[72vw] h-auto p-6 rounded-lg bg-white">
+      <div className="fixed top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 xl:w-[32vw] lg:w-[42vw] md:w-[52vw] w-[90vw] h-auto p-6 rounded-lg bg-white">
         <h1 className="text-xl font-semibold">Edit User </h1>
         <form onSubmit={handleSubmit(handleEditUser)}>
           <div className="my-4">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { aiIcons, ioIcons, mdIcons } from "../../../global/icons";
 import {
   useDeleteUser,
@@ -22,7 +22,7 @@ const Users = () => {
   const [userId, setUserId] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const { mutateAsync: deleteRecord, isPending } = useDeleteUser();
-  const { setUserDetails } = useDashboardStore();
+  const { setUserDetails, searchItem } = useDashboardStore();
 
   const handleDelete = async (id) => {
     try {
@@ -38,14 +38,21 @@ const Users = () => {
       toast.error(error || "Failed to delete user!");
     }
   };
+
+  useEffect(() => {
+    const results = users?.data?.filter(
+      (item) =>
+        item?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+        item?.id.toString().includes(searchItem.toString()) ||
+        item?.email.toLowerCase().includes(searchItem.toLowerCase()) ||
+        item?.role.toLowerCase().includes(searchItem.toLowerCase())
+    );
+
+    setFilteredData(results);
+  }, [searchItem, users]);
   return (
     <>
-      <TopBar
-        searchData={users?.data}
-        setFilteredData={setFilteredData}
-        func={"users"}
-      />
-      <div className="px-12 pb-8">
+      <div className="px-2 md:px-12 pb-8">
         {/* Heading Section */}
         <div className="my-4 md:mb-0">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -60,11 +67,13 @@ const Users = () => {
             onClick={() => setIsOpen(true)}
             className="px-[1rem] py-[0.5rem] rounded-lg cursor-pointer hover:bg-theme-blue bg-theme-darkBlue text-white"
           >
-            <span className="flex items-center gap-1">{ioIcons.IoMdAdd} Create New User</span>
+            <span className="flex items-center gap-1">
+              {ioIcons.IoMdAdd} Create New User
+            </span>
           </button>
         </div>
         {/* Users Table */}
-        <div className=" bg-white rounded-xl shadow-md overflow-x-auto">
+        <div className=" bg-white md:rounded-xl shadow-md overflow-x-auto">
           <table className="min-w-full border border-gray-100 shadow-lg">
             <thead className="text-sm lg:text-base bg-theme-darkBlue text-white ">
               <tr className="">

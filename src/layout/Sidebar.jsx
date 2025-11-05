@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { faIcons, hiIcons, mdIcons } from "../global/icons";
 import { useDashboardStore } from "../store/appStore";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ openSidebar, setOpenSidebar }) => {
   const { sideBarOption, setSideBarOption } = useDashboardStore();
-  const [openSidebar, setOpenSidebar] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     // Sync the sidebar option with the current route
@@ -62,16 +61,8 @@ const Sidebar = () => {
   return (
     <>
       <div
-        onClick={() => setOpenSidebar(true)}
-        className={` ${
-          !openSidebar ? "absolute z-10" : "hidden"
-        }  left-1 h-screen top-4 md:hidden p-1 me-2 text-xl text-black `}
-      >
-        {hiIcons.HiMiniArrowRightOnRectangle}
-      </div>
-      <div
         className={`${
-          openSidebar ? "max-md:absolute z-10" : "max-md:hidden"
+          openSidebar ? "max-md:absolute z-10 h-screen" : "max-md:hidden"
         } md:block  w-48 lg:w-64 p-4 bg-[#142a3e] text-white `}
       >
         {/* Logo section */}

@@ -5,7 +5,7 @@ import {
 } from "../../../services/camera/camera.hooks";
 import { useDashboardStore } from "../../../store/appStore";
 import { aiIcons, mdIcons } from "../../../global/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditCamera from "../../../components/modals/CameraModal/EditCamera";
 import EditCameraData from "../../../components/modals/CameraModal/EditCameraData";
 import DeleteAlert from "../../../components/modals/DeleteAlertModal/DeleteAlert";
@@ -15,7 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 const Camera = () => {
   const { data: cameraList, isPending: listLoading } = useGetCameraList();
-  const { setCameraDetails } = useDashboardStore();
+  const { setCameraDetails, searchItem } = useDashboardStore();
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isEditModal, setIsEditModal] = useState(false);
   const [cameraId, setCameraId] = useState("");
@@ -48,14 +48,19 @@ const Camera = () => {
     }
   };
 
+  useEffect(() => {
+    const results = cameraList?.filter(
+      (item) =>
+        item?.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+        item?.id.toString().includes(searchItem.toString())
+    );
+
+    setFilteredData(results);
+  }, [searchItem, cameraList]);
+
   return (
     <>
-      <TopBar
-        searchData={cameraList}
-        setFilteredData={setFilteredData}
-        func={"camera"}
-      />
-      <div className="px-12 pb-8">
+      <div className="px-2 md:px-12 pb-8">
         {/* Heading Section */}
         <div className="my-4 md:mb-12">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -67,7 +72,7 @@ const Camera = () => {
         </div>
 
         {/* Table content section */}
-        <div className=" bg-white rounded-xl shadow-md overflow-x-auto">
+        <div className=" bg-white md:rounded-xl shadow-md overflow-x-auto">
           <table className="min-w-full border border-gray-100 shadow-lg">
             <thead className="text-sm lg:text-base bg-theme-darkBlue text-white ">
               <tr className="">
@@ -115,7 +120,7 @@ const Camera = () => {
                         </button>
                         <button
                           onClick={() => handleZoneClick(camera)}
-                          className="px-3 py-1 text-sm cursor-pointer rounded-lg bg-theme-darkBlue hover:bg-[#3a4f63] hover:text-white"
+                          className="px-3 py-1 text-sm cursor-pointer rounded-lg whitespace-nowrap bg-theme-darkBlue hover:bg-[#3a4f63] hover:text-white"
                         >
                           View Zones
                         </button>

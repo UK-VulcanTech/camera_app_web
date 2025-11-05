@@ -5,7 +5,7 @@ import { tiIcons } from "../../../global/icons";
 const DeleteAlertData = ({ onClose, onDelete, isLoading }) => {
   return (
     <div className="flex items-center justify-center h-screen ">
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:w-[28vw] lg:w-[42vw] md:w-[52vw] w-[72vw] h-auto p-6 rounded-lg bg-white text-solutyics-gray">
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:w-[28vw] lg:w-[42vw] md:w-[52vw] w-[90vw] h-auto p-6 rounded-lg bg-white text-solutyics-gray">
         <p className="flex justify-center mb-4 text-6xl text-red-400">
           {tiIcons.TiDeleteOutline}
         </p>
